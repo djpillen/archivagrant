@@ -3,6 +3,7 @@
 
 echo "Installing dependencies"
 apt-get -y install default-jre
+apt-get -y install curl
 apt-get -y install unzip
 apt-get -y install git
 
@@ -50,5 +51,20 @@ chmod +x archivesspace.sh
 echo "Setting up database"
 scripts/setup-database.sh
 
-echo "Starting ArchivesSpace"
-./archivesspace.sh start
+echo "Adding ArchivesSpace to system startup"
+cd /etc/init.d
+ln -s /home/vagrant/archivesspace/archivesspace.sh archivesspace
+
+update-rc.d archivesspace defaults
+update-rc.d archivesspace enable
+
+echo "Rebooting"
+reboot
+
+cd /vagrant
+
+python archivesspace_defaults.py
+
+echo "All done!"
+echo "Point your host machine's browser to http://localhost:8080 to begin using ArchivesSpace"
+echo "vagrant ssh to access the virtual machine"
