@@ -2,7 +2,6 @@ import requests
 import json
 import os
 from os.path import join
-import zipfile
 
 latest_release_api = 'https://api.github.com/repos/archivesspace/archivesspace/releases/latest'
 
@@ -11,9 +10,8 @@ save_dir = '/home/vagrant'
 if not os.path.exists(save_dir):
 	os.makedirs(save_dir)
 
-def extract_release(zip_file, save_dir):
-	with zipfile.ZipFile(zip_file) as zipped:
-		zipped.extractall(save_dir)
+def extract_release(zip_file):
+	os.system('unzip ' + zip_file + ' -d /home/vagrant/')
 
 with requests.Session() as s:
 	print "Finding the latest ArchivesSpace release"
@@ -31,11 +29,11 @@ with requests.Session() as s:
 			print "Saving latest release to", zip_file
 			outfile.write(latest_release_zip.content)
 		print "Extracting latest release"
-		extract_release(zip_file, save_dir)
+		extract_release(zip_file)
 	elif os.path.exists(zip_file) and not os.path.exists(unzipped_file):
 		print "Latest release downloaded but not extracted"
 		print "Extracting..."
-		extract_release(zip_file, save_dir)
+		extract_release(zip_file)
 	else:
 		print "Latest release already downloaded and extracted"
 

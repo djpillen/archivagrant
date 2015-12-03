@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 
-echo "Installing java"
+echo "Installing dependencies"
 apt-get -y install default-jre
+apt-get -y install unzip
+apt-get -y install git
 
 DBURL='jdbc:mysql://localhost:3306/archivesspace\?user\=as\&password=as123\&useUnicode=true\&characterEncoding\=UTF\-8'
 PLUGINS="\['bhl-ead-importer','bhl-ead-exporter','container_management','aspace_jsonmodel_from_format'\]"
@@ -13,26 +15,25 @@ echo "Downloading latest ArchivesSpace release"
 python download_latest_archivesspace.py
 
 echo "Installing plugins"
-apt-get -y install unzip
-apt-get -y install git
-
 cd /home/vagrant
 
+echo "Installing container management"
 wget https://github.com/hudmol/container_management/releases/download/1.1/container_management-1.1.zip
-
 unzip container_management-1.1.zip -d /home/vagrant/archivesspace/plugins
 
-git clone https://github.com/bentley-historical-library/bhl-ead-importer.git /home/vagrant/archivesspace/plugins
-git clone https://github.com/bentley-historical-library/bhl-ead-exporter.git /home/vagrant/archivesspace/plugins
+echo "Installing BHL EAD Importer and Exporter"
+cd archivesspace/plugins
+git clone https://github.com/bentley-historical-library/bhl-ead-importer.git
+git clone https://github.com/bentley-historical-library/bhl-ead-exporter.git
 
+echo "Copying ASpace JSONModel From Format to the ArchivesSpace plugins directory"
 cp -avr /vagrant/local/aspace_jsonmodel_from_format /home/vagrant/archivesspace/plugins
 
+echo "Installing mysql java connector"
 cd /home/vagrant/archivesspace/lib
-
-wget -Oq "http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.37/mysql-connector-java-5.1.37.jar"
+wget http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.37/mysql-connector-java-5.1.37.jar
 
 echo "Editing config"
-
 cd /home/vagrant/archivesspace/config
 
 # http://stackoverflow.com/questions/14643531/changing-contents-of-a-file-through-shell-script
@@ -40,12 +41,10 @@ cd /home/vagrant/archivesspace/config
 sed -i 's@\#AppConfig\[:db_url\] = .*@AppConfig\[:db_url\] = "'$DBURL'"@' config.rb
 sed -i 's@\#AppConfig\[:plugins\] = .*@AppConfig\[:plugins\] = '$PLUGINS'@' config.rb
 
+echo "Setting up database and starting ArchivesSpace"
 cd /home/vagrant/archivesspace/scripts
-
 chmod +x setup-database.sh
-
-cd ..
-
+cd /home/vagrant/archivesspace
 chmod +x archivesspace.sh
 
 echo "Setting up database"
