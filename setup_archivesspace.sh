@@ -58,8 +58,9 @@ ln -s /home/vagrant/archivesspace/archivesspace.sh archivesspace
 update-rc.d archivesspace defaults
 update-rc.d archivesspace enable
 
-echo "Rebooting"
-reboot
+cd /home/vagrant/archivesspace
+
+./archivesspace.sh start
 
 cd /vagrant
 
