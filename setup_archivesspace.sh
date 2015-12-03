@@ -60,10 +60,11 @@ update-rc.d archivesspace enable
 
 cd /home/vagrant/archivesspace
 
+echo "Starting ArchivesSpace"
 ./archivesspace.sh start
 
+echo "Setting up ArchivesSpace defaults"
 cd /vagrant
-
 python archivesspace_defaults.py
 
 echo "All done!"
