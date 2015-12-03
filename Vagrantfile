@@ -14,6 +14,6 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.provision "shell", path:"setup_python.sh"
-  config.vm.provision "shell", path:"install_mysql.sh"
+  config.vm.provision "shell", path:"setup_mysql.sh"
   config.vm.provision "shell", path:"setup_archivesspace.sh"
 end
