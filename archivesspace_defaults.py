@@ -65,14 +65,11 @@ name_sources['values'].append('lcnaf')
 update_name_sources = requests.post('http://localhost:8089/config/enumerations/4',headers=headers,data=json.dumps(name_sources)).json()
 print update_name_sources
 
-repo_preferences = requests.get('http://localhost:8089/repositories/2/preferences',headers=headers).json()
 
-for preference in repo_preferences:
-	if 'user_id' not in preference:
-		global_defaults = preference
+repo_preferences = {
+	'repository':{'ref':'/repositories/2'},
+	'defaults':{'publish':True}
+	}
 
-global_defaults_uri = global_defaults['uri']
-global_defaults['defaults']['publish'] = True
-
-update_defaults = requests.post('http://localhost:8089' + global_defaults_uri, headers=headers, data=json.dumps(global_defaults)).json()
-post update_defaults
+repo_preferences_post = requests.post('http://localhost:8089/repositories/3/preferences',headers=headers, data=json.dumps(repo_preferences)).json()
+print repo_preferences_post
