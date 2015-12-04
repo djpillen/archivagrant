@@ -23,7 +23,7 @@ headers = {'X-ArchivesSpace-Session':session}
 
 bhl_repo = {
 		'name':'Bentley Historical Library',
-		'org_code':'Mi-U',
+		'org_code':'MiU-H',
 		'repo_code':'BHL',
 		'parent_institution_name':'University of Michigan'
 		}
