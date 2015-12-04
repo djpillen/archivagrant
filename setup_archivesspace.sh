@@ -7,8 +7,8 @@ apt-get -y install curl
 apt-get -y install unzip
 apt-get -y install git
 
-DBURL='jdbc:mysql://localhost:3306/archivesspace\?user\=as\&password=as123\&useUnicode=true\&characterEncoding\=UTF\-8'
-PLUGINS="\['bhl-ead-importer','bhl-ead-exporter','container_management','aspace_jsonmodel_from_format'\]"
+DBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
+PLUGINS="AppConfig[:plugins] = ['bhl-ead-importer','bhl-ead-exporter','container_management','aspace_jsonmodel_from_format']"
 
 cd /vagrant
 
@@ -39,8 +39,8 @@ cd /home/vagrant/archivesspace/config
 
 # http://stackoverflow.com/questions/14643531/changing-contents-of-a-file-through-shell-script
 
-sed -i 's@\#AppConfig\[:db_url\] = .*@AppConfig\[:db_url\] = "'$DBURL'"@' config.rb
-sed -i 's@\#AppConfig\[:plugins\] = .*@AppConfig\[:plugins\] = '$PLUGINS'@' config.rb
+sed -i "s@#AppConfig\[:db_url\].*@$DBURL@" config.rb
+sed -i "s@#AppConfig\[:plugins\].*@$PLUGINS@" config.rb
 
 echo "Setting up database and starting ArchivesSpace"
 cd /home/vagrant/archivesspace/scripts
