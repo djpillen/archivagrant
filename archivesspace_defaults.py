@@ -71,5 +71,5 @@ repo_preferences = {
 	'defaults':{'publish':True}
 	}
 
-repo_preferences_post = requests.post('http://localhost:8089/repositories/3/preferences',headers=headers, data=json.dumps(repo_preferences)).json()
+repo_preferences_post = requests.post('http://localhost:8089/repositories/2/preferences',headers=headers, data=json.dumps(repo_preferences)).json()
 print repo_preferences_post
