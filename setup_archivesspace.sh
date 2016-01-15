@@ -8,7 +8,7 @@ apt-get -y install unzip
 apt-get -y install git
 
 DBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
-PLUGINS="AppConfig[:plugins] = ['bhl-ead-importer','bhl-ead-exporter','container_management','aspace_jsonmodel_from_format']"
+PLUGINS="AppConfig[:plugins] = ['bhl-ead-importer','bhl-ead-exporter','container_management','aspace-jsonmodel-from-format']"
 
 cd /vagrant
 
@@ -27,8 +27,8 @@ cd archivesspace/plugins
 git clone https://github.com/bentley-historical-library/bhl-ead-importer.git
 git clone https://github.com/bentley-historical-library/bhl-ead-exporter.git
 
-echo "Copying ASpace JSONModel From Format to the ArchivesSpace plugins directory"
-cp -avr /vagrant/local/aspace_jsonmodel_from_format /home/vagrant/archivesspace/plugins
+echo "Installing Mark Cooper's JSONModel from Format plugin"
+git clone https://github.com/bentley-historical-library/aspace-jsonmodel-from-format.git
 
 echo "Installing mysql java connector"
 cd /home/vagrant/archivesspace/lib
