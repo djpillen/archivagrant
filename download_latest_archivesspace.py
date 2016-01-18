@@ -11,6 +11,7 @@ if not os.path.exists(save_dir):
 	os.makedirs(save_dir)
 
 def extract_release(zip_file):
+	# Use os.system instead of the python zipfile library to preserve permissions
 	os.system('unzip ' + zip_file + ' -d /home/vagrant/')
 
 with requests.Session() as s:
@@ -26,7 +27,7 @@ with requests.Session() as s:
 		print "Downloading latest release"
 		latest_release_zip = s.get(latest_release_url)
 		with open(zip_file,'wb') as outfile:
-			print "Saving latest release to", zip_file
+			print "Saving latest release to {0}".format(zip_file)
 			outfile.write(latest_release_zip.content)
 		print "Extracting latest release"
 		extract_release(zip_file)

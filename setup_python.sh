@@ -13,5 +13,5 @@ pip install --upgrade pip
 rm /usr/bin/pip
 ln -s /usr/local/bin/pip /usr/bin/pip
 
-# Install the python requests library
+# Install the Python requests library
 pip install requests

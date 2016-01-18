@@ -2,6 +2,8 @@ import requests
 import time
 import json
 
+# This script is used to setup BHL ArchivesSpace defaults for running test migrations
+
 def test_connection():
 	try:
 		requests.get('http://localhost:8089')
@@ -64,7 +66,6 @@ name_sources = requests.get('http://localhost:8089/config/enumerations/4',header
 name_sources['values'].append('lcnaf')
 update_name_sources = requests.post('http://localhost:8089/config/enumerations/4',headers=headers,data=json.dumps(name_sources)).json()
 print update_name_sources
-
 
 repo_preferences = {
 	'repository':{'ref':'/repositories/2'},
