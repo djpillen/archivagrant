@@ -5,15 +5,15 @@ apt-get -y install default-jre
 apt-get -y install unzip
 apt-get -y install git
 
-# These will be used to edit the ArchivesSpace config file to use the correct database URL and setup our plugins
-DBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
-PLUGINS="AppConfig[:plugins] = ['bhl-ead-importer','bhl-ead-exporter','container_management','aspace-jsonmodel-from-format']"
-
 cd /vagrant
 
 echo "Downloading latest ArchivesSpace release"
 # Use a Python script to download the latest ArchivesSpace release, because this is the only way that I know how
 python download_latest_archivesspace.py
+
+# These variables will be used to edit the ArchivesSpace config file to use the correct database URL and setup our plugins
+DBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
+PLUGINS="AppConfig[:plugins] = ['bhl-ead-importer','bhl-ead-exporter','container_management','aspace-jsonmodel-from-format']"
 
 echo "Installing plugins"
 cd /home/vagrant
