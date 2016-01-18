@@ -2,7 +2,6 @@
 
 echo "Installing dependencies"
 apt-get -y install default-jre
-apt-get -y install curl
 apt-get -y install unzip
 apt-get -y install git
 
