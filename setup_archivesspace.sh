@@ -1,32 +1,40 @@
 #!/usr/bin/env bash
 
 echo "Installing dependencies"
-apt-get -y install default-jre
+apt-get -y install openjdk-7-jdk
 apt-get -y install unzip
 apt-get -y install git
-
-cd /vagrant
+apt-get -y install curl
 
 echo "Downloading latest ArchivesSpace release"
 # Use a Python script to download the latest ArchivesSpace release, because this is the only way that I know how
-python download_latest_archivesspace.py
+#cd /vagrant
+#python download_latest_archivesspace.py
+
+# Sometimes I want to download a release candidate. Uncomment the below lines, add the direct link to the release candidate, and comment out the above python script
+cd /home/vagrant
+wget https://github.com/archivesspace/archivesspace/releases/download/v1.4.7-032016-dev/archivesspace-v1.4.7-032016-dev.zip
+unzip archivesspace-v1.4.7-032016-dev.zip
 
 # These variables will be used to edit the ArchivesSpace config file to use the correct database URL and setup our plugins
 DBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
-PLUGINS="AppConfig[:plugins] = ['bhl-ead-importer','bhl-ead-exporter','container_management','aspace-jsonmodel-from-format']"
+PLUGINS="AppConfig[:plugins] = ['bhl-ead-importer','bhl-ead-exporter','aspace-jsonmodel-from-format','donor_details']" #'container_management'
 
 echo "Installing plugins"
 cd /home/vagrant
 
-echo "Installing container management"
+#echo "Installing container management"
 # Grab a release instead of cloning the repo to make sure it's a version compatible with latest ArchivesSpace releases
-wget https://github.com/hudmol/container_management/releases/download/1.1/container_management-1.1.zip
-unzip container_management-1.1.zip -d /home/vagrant/archivesspace/plugins
+#wget https://github.com/hudmol/container_management/releases/download/1.1/container_management-1.1.zip
+#unzip container_management-1.1.zip -d /home/vagrant/archivesspace/plugins
 
-echo "Installing BHL EAD Importer and Exporter"
 cd archivesspace/plugins
+echo "Installing BHL EAD Importer and Exporter"
 git clone https://github.com/bentley-historical-library/bhl-ead-importer.git
 git clone https://github.com/bentley-historical-library/bhl-ead-exporter.git
+
+echo "Installing BHL Donor Details Plugin"
+git clone https://github.com/bentley-historical-library/donor_details.git
 
 echo "Installing Mark Cooper's JSONModel from Format plugin"
 git clone https://github.com/bentley-historical-library/aspace-jsonmodel-from-format.git
@@ -66,10 +74,10 @@ cd /home/vagrant/archivesspace
 echo "Starting ArchivesSpace"
 ./archivesspace.sh start
 
-echo "Setting up ArchivesSpace defaults"
-cd /vagrant
-python archivesspace_defaults.py
+#echo "Set up ArchivesSpace defaults"
+#cd /vagrant
+#python archivesspace_defaults.py
 
 echo "All done!"
-echo "Point your host machine's browser to http://localhost:8080 to begin using ArchivesSpace"
+echo "Set up ArchivesSpace defaults and point your host machine's browser to http://localhost:8080 to begin using ArchivesSpace"
 echo "Use vagrant ssh to access the virtual machine"

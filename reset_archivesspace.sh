@@ -22,6 +22,7 @@ echo "Starting ArchivesSpace"
 service archivesspace start
 
 
-echo "Applying ArchivesSpace defaults"
-cd /vagrant
-python archivesspace_defaults.py
+echo "All done! Reapply ArchivesSpace defaults"
+#echo "Applying ArchivesSpace defaults"
+#cd /vagrant
+#python archivesspace_defaults.py
