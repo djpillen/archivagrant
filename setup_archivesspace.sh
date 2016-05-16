@@ -13,12 +13,14 @@ echo "Downloading latest ArchivesSpace release"
 
 # Sometimes I want to download a release candidate. Uncomment the below lines, add the direct link to the release candidate, and comment out the above python script
 cd /home/vagrant
-wget https://github.com/archivesspace/archivesspace/releases/download/v1.4.7-032016-dev/archivesspace-v1.4.7-032016-dev.zip
-unzip archivesspace-v1.4.7-032016-dev.zip
+wget https://github.com/archivesspace/archivesspace/releases/download/v1.5.0-RC2/archivesspace-v1.5.0-RC2.zip
+unzip archivesspace-v1.5.0-RC2.zip
 
 # These variables will be used to edit the ArchivesSpace config file to use the correct database URL and setup our plugins
 DBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
 PLUGINS="AppConfig[:plugins] = ['bhl-ead-importer','bhl-ead-exporter','aspace-jsonmodel-from-format','donor_details']" #'container_management'
+PUBLIC="AppConfig[:enable_public] = false"
+FRONTEND="AppConfig[:enable_frontend] = false"
 
 echo "Installing plugins"
 cd /home/vagrant
@@ -47,10 +49,12 @@ wget http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.37/mysql-con
 echo "Editing config"
 cd /home/vagrant/archivesspace/config
 
-# Edit the config file to use the MySQL database and setup our plugins
+# Edit the config file to use the MySQL database, setup our plugins, and disable the public and staff interfaces
 # http://stackoverflow.com/questions/14643531/changing-contents-of-a-file-through-shell-script
 sed -i "s@#AppConfig\[:db_url\].*@$DBURL@" config.rb
 sed -i "s@#AppConfig\[:plugins\].*@$PLUGINS@" config.rb
+sed -i "s@#AppConfig\[:enable_public\].*@$PUBLIC@" config.rb
+sed -i "s@#AppConfig\[:enable_frontend\].*@$FRONTEND@" config.rb
 
 echo "Setting up database and starting ArchivesSpace"
 # First, make the setup-database.sh and archivesspace.sh scripts executable
