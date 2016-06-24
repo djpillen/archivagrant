@@ -20,7 +20,7 @@ unzip archivesspace-v1.5.0-RC2.zip
 DBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
 PLUGINS="AppConfig[:plugins] = ['bhl-ead-importer','bhl-ead-exporter','aspace-jsonmodel-from-format','donor_details']" #'container_management'
 PUBLIC="AppConfig[:enable_public] = false"
-FRONTEND="AppConfig[:enable_frontend] = false"
+FRONTEND="AppConfig[:enable_frontend] = true"
 
 echo "Installing plugins"
 cd /home/vagrant
