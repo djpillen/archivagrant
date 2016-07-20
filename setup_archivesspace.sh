@@ -13,12 +13,12 @@ echo "Downloading latest ArchivesSpace release"
 
 # Sometimes I want to download a release candidate. Uncomment the below lines, add the direct link to the release candidate, and comment out the above python script
 cd /home/vagrant
-wget https://github.com/archivesspace/archivesspace/releases/download/v1.5.0-RC2/archivesspace-v1.5.0-RC2.zip
-unzip archivesspace-v1.5.0-RC2.zip
+wget https://github.com/archivesspace/archivesspace/releases/download/v1.5.0/archivesspace-v1.5.0.zip
+unzip archivesspace-v1.5.0.zip
 
 # These variables will be used to edit the ArchivesSpace config file to use the correct database URL and setup our plugins
 DBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
-PLUGINS="AppConfig[:plugins] = ['bhl-ead-importer','bhl-ead-exporter','aspace-jsonmodel-from-format','donor_details']" #'container_management'
+PLUGINS="AppConfig[:plugins] = ['bhl-ead-importer','bhl-ead-exporter','aspace-jsonmodel-from-format','donor_details', 'generate_bhl_identifiers']" #'container_management'
 PUBLIC="AppConfig[:enable_public] = false"
 FRONTEND="AppConfig[:enable_frontend] = true"
 
@@ -38,13 +38,16 @@ git clone https://github.com/bentley-historical-library/bhl-ead-exporter.git
 echo "Installing BHL Donor Details Plugin"
 git clone https://github.com/bentley-historical-library/donor_details.git
 
+echo "Installing BHL Identifier Plugin"
+git clone https://github.com/bentley-historical-library/generate_bhl_identifiers.git
+
 echo "Installing Mark Cooper's JSONModel from Format plugin"
 git clone https://github.com/bentley-historical-library/aspace-jsonmodel-from-format.git
 
 echo "Installing mysql java connector"
 # http://archivesspace.github.io/archivesspace/user/running-archivesspace-against-mysql/
 cd /home/vagrant/archivesspace/lib
-wget http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.37/mysql-connector-java-5.1.37.jar
+wget http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar
 
 echo "Editing config"
 cd /home/vagrant/archivesspace/config
