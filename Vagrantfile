@@ -5,6 +5,8 @@ Vagrant.configure(2) do |config|
 
   config.vm.box = "hashicorp/precise32"
 
+  config.vm.network "forwarded_port", guest:80, host: 8888, auto_correct: true
+  config.vm.network "forwarded_port", guest: 443, host: 3443
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.network "forwarded_port", guest: 8089, host: 8089
   config.vm.network "forwarded_port", guest: 8081, host: 8081

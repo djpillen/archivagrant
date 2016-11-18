@@ -13,36 +13,39 @@ echo "Downloading latest ArchivesSpace release"
 
 # Sometimes I want to download a release candidate. Uncomment the below lines, add the direct link to the release candidate, and comment out the above python script
 cd /home/vagrant
-wget https://github.com/archivesspace/archivesspace/releases/download/v1.5.0/archivesspace-v1.5.0.zip
-unzip archivesspace-v1.5.0.zip
+wget https://github.com/archivesspace/archivesspace/releases/download/v1.5.1/archivesspace-v1.5.1.zip
+unzip archivesspace-v1.5.1.zip
 
 # These variables will be used to edit the ArchivesSpace config file to use the correct database URL and setup our plugins
 DBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
-PLUGINS="AppConfig[:plugins] = ['bhl-ead-importer','bhl-ead-exporter','aspace-jsonmodel-from-format','donor_details', 'generate_bhl_identifiers']" #'container_management'
+PLUGINS="AppConfig[:plugins] = ['timewalk', bhl_aspace_translations', 'bhl-ead-importer','bhl-ead-exporter','aspace-jsonmodel-from-format','donor_details', 'generate_bhl_identifiers']" #'container_management'
 PUBLIC="AppConfig[:enable_public] = false"
 FRONTEND="AppConfig[:enable_frontend] = true"
 
 echo "Installing plugins"
 cd /home/vagrant
 
-#echo "Installing container management"
-# Grab a release instead of cloning the repo to make sure it's a version compatible with latest ArchivesSpace releases
-#wget https://github.com/hudmol/container_management/releases/download/1.1/container_management-1.1.zip
-#unzip container_management-1.1.zip -d /home/vagrant/archivesspace/plugins
+git clone https://github.com/bentley-historical-library/vandura.git
 
 cd archivesspace/plugins
 echo "Installing BHL EAD Importer and Exporter"
 git clone https://github.com/bentley-historical-library/bhl-ead-importer.git
 git clone https://github.com/bentley-historical-library/bhl-ead-exporter.git
 
-echo "Installing BHL Donor Details Plugin"
+echo "Installing BHL Donor Details plugin"
 git clone https://github.com/bentley-historical-library/donor_details.git
 
-echo "Installing BHL Identifier Plugin"
+echo "Installing BHL Identifier plugin"
 git clone https://github.com/bentley-historical-library/generate_bhl_identifiers.git
+
+echo "Installing BHL ASpace Translations plugin"
+git clone https://github.com/bentley-historical-library/bhl_aspace_translations.git
 
 echo "Installing Mark Cooper's JSONModel from Format plugin"
 git clone https://github.com/bentley-historical-library/aspace-jsonmodel-from-format.git
+
+echo "Installing Alexander Duryee's Timewalk plugin"
+git clone https://github.com/alexduryee/timewalk.git
 
 echo "Installing mysql java connector"
 # http://archivesspace.github.io/archivesspace/user/running-archivesspace-against-mysql/
@@ -81,10 +84,6 @@ cd /home/vagrant/archivesspace
 echo "Starting ArchivesSpace"
 ./archivesspace.sh start
 
-#echo "Set up ArchivesSpace defaults"
-#cd /vagrant
-#python archivesspace_defaults.py
-
 echo "All done!"
-echo "Set up ArchivesSpace defaults and point your host machine's browser to http://localhost:8080 to begin using ArchivesSpace"
+echo "Set up ArchivesSpace defaults (or import an ASpace mysql dump) and point your host machine's browser to http://localhost:8080 to begin using ArchivesSpace"
 echo "Use vagrant ssh to access the virtual machine"
