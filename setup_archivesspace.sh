@@ -18,7 +18,7 @@ unzip archivesspace-v1.5.1.zip
 
 # These variables will be used to edit the ArchivesSpace config file to use the correct database URL and setup our plugins
 DBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
-PLUGINS="AppConfig[:plugins] = ['timewalk', bhl_aspace_translations', 'bhl-ead-importer','bhl-ead-exporter','aspace-jsonmodel-from-format','donor_details', 'generate_bhl_identifiers']" #'container_management'
+PLUGINS="AppConfig[:plugins] = ['timewalk', 'bhl_aspace_translations', 'bhl-ead-importer','bhl-ead-exporter','aspace-jsonmodel-from-format','donor_details', 'generate_bhl_identifiers']" #'container_management'
 PUBLIC="AppConfig[:enable_public] = false"
 FRONTEND="AppConfig[:enable_frontend] = true"
 
