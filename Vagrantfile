@@ -18,8 +18,6 @@ Vagrant.configure(2) do |config|
      vb.memory = "1024"
   end
 
-  config.vm.synced_folder "C:/Users/djpillen/GitHub", "/github"
-
   config.vm.provision "shell", path:"setup_python.sh"
   config.vm.provision "shell", path:"setup_mysql.sh"
   config.vm.provision "shell", path:"setup_archivesspace.sh"
