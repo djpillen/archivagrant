@@ -11,3 +11,9 @@ echo "mysql-server mysql-server/root_password_again password rootpwd" | debconf-
 apt-get -y install mysql-server
 mysql -uroot -prootpwd -e "create database archivesspace"
 mysql -uroot -prootpwd -e "grant all on archivesspace.* to 'as'@'localhost' identified by 'as123'"
+
+mysql -uroot -prootpwd -e "create database browse_pages"
+mysql -uroot -prootpwd -e "grant all on browse_pages.* to 'as'@'localhost' identified by 'as123'"
+
+mysql -uroot -prootpwd -e "create database aspacedev"
+mysql -uroot -prootpwd -e "grant all on aspacedev.* to 'as'@'localhost' identified by 'as123'"

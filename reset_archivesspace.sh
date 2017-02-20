@@ -8,6 +8,10 @@ mysql -uroot -prootpwd -e "drop database archivesspace"
 mysql -uroot -prootpwd -e "create database archivesspace"
 mysql -uroot -prootpwd -e "grant all on archivesspace.* to 'as'@'localhost' identified by 'as123'"
 
+mysql -uroot -prootpwd -e "drop database browse_pages"
+mysql -uroot -prootpwd -e "create database browse_pages"
+mysql -uroot -prootpwd -e "grant all on browse_pages.* to 'as'@'localhost' identified by 'as123'"
+
 echo "Deleting indexer state"
 cd /home/vagrant/archivesspace/data
 rm -rf indexer_state
@@ -20,7 +24,6 @@ scripts/setup-database.sh
 
 echo "Starting ArchivesSpace"
 service archivesspace start
-
 
 echo "All done! Reapply ArchivesSpace defaults"
 #echo "Applying ArchivesSpace defaults"
