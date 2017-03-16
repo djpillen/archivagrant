@@ -28,7 +28,7 @@ chown -R vagrant:vagrant /aspace
 DEVDBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/aspacedev?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
 cd /aspace/source/archivesspace/common/config
 echo $DEVDBURL >> config.rb
-cd /aspace/source/archivesspace 
+cd /aspace/source/archivesspace
 build/run bootstrap
 build/run db:migrate
 
