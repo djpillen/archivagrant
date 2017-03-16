@@ -18,7 +18,7 @@ mkdir /aspace/zips
 cd /aspace/source
 git clone https://github.com/archivesspace/archivesspace.git
 cd /aspace/zips
-wget https://github.com/archivesspace/archivesspace/releases/download/v1.5.3/archivesspace-v1.5.3.zip
+wget -nv https://github.com/archivesspace/archivesspace/releases/download/v1.5.3/archivesspace-v1.5.3.zip
 cd /aspace
 unzip /aspace/zips/archivesspace-v1.5.3.zip
 
@@ -28,7 +28,7 @@ chown -R vagrant:vagrant /aspace
 DEVDBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/aspacedev?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
 cd /aspace/source/archivesspace/common/config
 echo $DEVDBURL >> config.rb
-cd /aspace/source/archivesspace 
+cd /aspace/source/archivesspace
 build/run bootstrap
 build/run db:migrate
 
@@ -66,7 +66,7 @@ git clone https://github.com/alexduryee/timewalk.git
 echo "Installing mysql java connector"
 # http://archivesspace.github.io/archivesspace/user/running-archivesspace-against-mysql/
 cd /aspace/archivesspace/lib
-wget http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar
+wget -nv http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar
 
 echo "Editing config"
 cd /aspace/archivesspace/config

@@ -37,5 +37,3 @@ with requests.Session() as s:
 		extract_release(zip_file)
 	else:
 		print "Latest release already downloaded and extracted"
-
-
