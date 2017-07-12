@@ -8,7 +8,7 @@ echo "mysql-server mysql-server/root_password_again password rootpwd" | debconf-
 # Install mysql-server and create the archivesspace database
 # http://archivesspace.github.io/archivesspace/user/running-archivesspace-against-mysql/
 # https://gist.github.com/rrosiek/8190550
-apt-get -y install mysql-server
+apt-get -y install mysql-server libmysql-ruby libmysqlclient-dev
 mysql -uroot -prootpwd -e "create database archivesspace"
 mysql -uroot -prootpwd -e "grant all on archivesspace.* to 'as'@'localhost' identified by 'as123'"
 

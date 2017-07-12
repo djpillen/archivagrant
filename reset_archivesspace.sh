@@ -13,13 +13,13 @@ mysql -uroot -prootpwd -e "create database browse_pages"
 mysql -uroot -prootpwd -e "grant all on browse_pages.* to 'as'@'localhost' identified by 'as123'"
 
 echo "Deleting indexer state"
-cd /home/vagrant/archivesspace/data
+cd /aspace/archivesspace/data
 rm -rf indexer_state
 rm -rf solr_backups
 rm -rf solr_index
 
 echo "Setting up database"
-cd /home/vagrant/archivesspace
+cd /aspace/archivesspace
 scripts/setup-database.sh
 
 echo "Starting ArchivesSpace"
