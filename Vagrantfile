@@ -3,7 +3,7 @@
 
 Vagrant.configure(2) do |config|
 
-  config.vm.box = "hashicorp/precise32"
+  config.vm.box = "ubuntu/xenial64"
 
   config.vm.network "forwarded_port", guest: 3000, host: 3000
   config.vm.network "forwarded_port", guest: 3306, host: 3306
@@ -19,9 +19,12 @@ Vagrant.configure(2) do |config|
      vb.memory = "2048"
   end
 
+  config.vm.synced_folder "C:/Users/djpillen/GitHub", "/github"
+
+  config.vm.provision "shell", path:"bootstrap.sh"
   config.vm.provision "shell", path:"setup_python.sh"
   config.vm.provision "shell", path:"setup_mysql.sh"
-  config.vm.provision "shell", path:"setup_ruby.sh"
+  config.vm.provision "shell", path:"setup_ruby.sh", privileged: false
   config.vm.provision "shell", path:"setup_archivesspace.sh"
 
 end

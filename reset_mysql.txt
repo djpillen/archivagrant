@@ -1,0 +1,11 @@
+Use these steps to reset the MySQL password, e.g. when using an external database backup changes the root password. 
+
+sudo systemctl stop archivesspace.service
+sudo service mysql stop
+sudo mkdir /var/run/mysqld
+sudo chown mysql: /var/run/mysqld
+sudo mysqld_safe --skip-grant-tables --skip-networking &
+sudo mysql -uroot mysql
+UPDATE mysql.user SET authentication_string=PASSWORD('rootpwd') WHERE User='root' AND Host='localhost';
+sudo mysqladmin -S /var/run/mysqld/mysqld.sock shutdown
+sudo service mysql start

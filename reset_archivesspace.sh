@@ -24,8 +24,3 @@ scripts/setup-database.sh
 
 echo "Starting ArchivesSpace"
 service archivesspace start
-
-echo "All done! Reapply ArchivesSpace defaults"
-#echo "Applying ArchivesSpace defaults"
-#cd /vagrant
-#python archivesspace_defaults.py
