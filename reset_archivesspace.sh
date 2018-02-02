@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Stopping ArchivesSpace"
-service archivesspace stop
+systemctl stop archivesspace.service
 
 echo "Dropping and recreating database"
 mysql -uroot -prootpwd -e "drop database archivesspace"
@@ -23,4 +23,4 @@ cd /aspace/archivesspace
 scripts/setup-database.sh
 
 echo "Starting ArchivesSpace"
-service archivesspace start
+systemctl start archivesspace.service
