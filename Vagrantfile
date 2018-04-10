@@ -14,12 +14,14 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 8090, host: 8090
   config.vm.network "forwarded_port", guest: 8443, host: 8443
   config.vm.network "forwarded_port", guest: 8983, host: 8983
+  config.vm.network "forwarded_port", guest: 8888, host: 8888
+  config.vm.network "forwarded_port", guest: 4000, host: 4000
 
   config.vm.provider "virtualbox" do |vb|
      vb.memory = "2048"
   end
 
-  config.vm.synced_folder "C:/Users/djpillen/GitHub", "/github"
+  config.vm.synced_folder "/path/to/host/code", "/code"
 
   config.vm.provision "shell", path:"bootstrap.sh"
   config.vm.provision "shell", path:"setup_python.sh"

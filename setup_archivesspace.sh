@@ -24,7 +24,7 @@ build/run db:migrate
 # These variables will be used to edit the ArchivesSpace config file to use the correct database URL and setup our plugins
 DBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
 BROWSEURL='AppConfig[:browse_page_db_url] = "jdbc:mysql://localhost:3306/browse_pages?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
-PLUGINS="AppConfig[:plugins] = ['accession_events', 'aspace-jsonmodel-from-format', 'bhl_accession_readonly_fields', 'bhl_accession_search', 'bhl_aspace_branding', 'bhl_aspace_handle_verifier', 'bhl_aspace_print_template', 'bhl_aspace_reports', 'bhl_aspace_translations', 'bhl_barcode', 'bhl_browse_pages', 'bhl-ead-exporter', 'bhl-ead-importer', 'bulk_create_containers', 'donor_details', 'generate_bhl_identifiers', 'timewalk', 'user_defined_in_basic']"
+PLUGINS="AppConfig[:plugins] = ['accession_events', 'aspace-jsonmodel-from-format', 'bhl_accession_readonly_fields', 'bhl_accession_search', 'bhl_aspace_archive_it', 'bhl_aspace_branding', 'bhl_aspace_handle_verifier', 'bhl_aspace_print_template', 'bhl_aspace_reports', 'bhl_aspace_translations', 'bhl_barcode', 'bhl_browse_pages', 'bhl-ead-exporter', 'bhl-ead-importer', 'bulk_create_containers', 'donor_details', 'generate_bhl_identifiers', 'timewalk', 'user_defined_in_basic']"
 PUBLIC="AppConfig[:enable_public] = false"
 FRONTEND="AppConfig[:enable_frontend] = true"
 INDEXER="AppConfig[:enable_indexer] = false"
@@ -37,6 +37,7 @@ git clone https://github.com/bentley-historical-library/accession_events.git
 git clone https://github.com/bentley-historical-library/aspace-jsonmodel-from-format.git
 git clone https://github.com/bentley-historical-library/bhl_accession_readonly_fields.git
 git clone https://github.com/bentley-historical-library/bhl_accession_search.git
+git clone https://github.com/bentley-historical-library/bhl_aspace_archive_it.git
 git clone https://github.com/bentley-historical-library/bhl_aspace_branding.git
 git clone https://github.com/bentley-historical-library/bhl_aspace_handle_verifier.git
 git clone https://github.com/bentley-historical-library/bhl_aspace_print_template.git
@@ -98,7 +99,7 @@ WantedBy=multi-user.target" > /etc/systemd/system/archivesspace.service
 systemctl start archivesspace.service
 systemctl enable archivesspace.service
 
-chown -R ubuntu:ubuntu /aspace
+chown -R vagrant:vagrant /aspace
 
 echo "Browse to http://localhost:8080 to begin using the ArchivesSpace application"
 echo "Use vagrant ssh to access the virtual machine"
