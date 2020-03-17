@@ -1,20 +1,21 @@
 #!/usr/bin/env bash
 
 # Download and unzip a packaged ArchivesSpace release and corresponding source code
+export AS_VERSION=2.5.2
 mkdir /aspace
 mkdir /aspace/source
 mkdir /aspace/zips
 cd /aspace/zips
-wget -nv https://github.com/archivesspace/archivesspace/releases/download/v2.2.2/archivesspace-v2.2.2.zip
-wget -nv https://github.com/archivesspace/archivesspace/archive/v2.2.2.zip
+wget -nv https://github.com/archivesspace/archivesspace/releases/download/v$AS_VERSION/archivesspace-v$AS_VERSION.zip
+wget -nv https://github.com/archivesspace/archivesspace/archive/v$AS_VERSION.zip
 cd /aspace
-unzip /aspace/zips/archivesspace-v2.2.2.zip
+unzip /aspace/zips/archivesspace-v$AS_VERSION.zip
 cd /aspace/source
-unzip /aspace/zips/v2.2.2.zip
-mv *2.2.2 archivesspace
+unzip /aspace/zips/v$AS_VERSION.zip
+mv *$AS_VERSION archivesspace
 
 # Setting up ArchivesSpace from source
-DEVDBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/aspacedev?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
+DEVDBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/aspacedev?user=root\&password=rootpwd\&useUnicode=true\&characterEncoding=UTF-8"'
 cd /aspace/source/archivesspace/common/config
 echo $DEVDBURL >> config.rb
 cd /aspace/source/archivesspace
@@ -22,9 +23,9 @@ build/run bootstrap
 build/run db:migrate
 
 # These variables will be used to edit the ArchivesSpace config file to use the correct database URL and setup our plugins
-DBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
-BROWSEURL='AppConfig[:browse_page_db_url] = "jdbc:mysql://localhost:3306/browse_pages?user=as\&password=as123\&useUnicode=true\&characterEncoding=UTF-8"'
-PLUGINS="AppConfig[:plugins] = ['accession_events', 'aspace-jsonmodel-from-format', 'bhl_accession_readonly_fields', 'bhl_accession_search', 'bhl_aspace_archive_it', 'bhl_aspace_branding', 'bhl_aspace_handle_verifier', 'bhl_aspace_print_template', 'bhl_aspace_reports', 'bhl_aspace_translations', 'bhl_barcode', 'bhl_browse_pages', 'bhl-ead-exporter', 'bhl-ead-importer', 'bulk_create_containers', 'donor_details', 'generate_bhl_identifiers', 'timewalk', 'user_defined_in_basic']"
+DBURL='AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=root\&password=rootpwd\&useUnicode=true\&characterEncoding=UTF-8"'
+BROWSEURL='AppConfig[:browse_page_db_url] = "jdbc:mysql://localhost:3306/browse_pages?user=root\&password=rootpwd\&useUnicode=true\&characterEncoding=UTF-8"'
+PLUGINS="AppConfig[:plugins] = ['accession_events', 'aspace-jsonmodel-from-format', 'bhl_accession_readonly_fields', 'bhl_accession_search', 'bhl_aspace_accessrestrict_text', 'bhl_aspace_archive_it', 'bhl_aspace_branding', 'bhl_aspace_handle_verifier', 'bhl_aspace_print_template', 'bhl_aspace_reports', 'bhl_aspace_translations', 'bhl_barcode', 'bhl_browse_pages', 'bhl-ead-exporter', 'bhl-ead-importer', 'bulk_create_containers', 'donor_details', 'generate_bhl_identifiers', 'timewalk', 'user_defined_in_basic']"
 PUBLIC="AppConfig[:enable_public] = false"
 FRONTEND="AppConfig[:enable_frontend] = true"
 INDEXER="AppConfig[:enable_indexer] = false"
@@ -37,6 +38,7 @@ git clone https://github.com/bentley-historical-library/accession_events.git
 git clone https://github.com/bentley-historical-library/aspace-jsonmodel-from-format.git
 git clone https://github.com/bentley-historical-library/bhl_accession_readonly_fields.git
 git clone https://github.com/bentley-historical-library/bhl_accession_search.git
+git clone https://github.com/bentley-historical-library/bhl_aspace_accessrestrict_text.git
 git clone https://github.com/bentley-historical-library/bhl_aspace_archive_it.git
 git clone https://github.com/bentley-historical-library/bhl_aspace_branding.git
 git clone https://github.com/bentley-historical-library/bhl_aspace_handle_verifier.git
@@ -55,7 +57,7 @@ git clone https://github.com/bentley-historical-library/user_defined_in_basic.gi
 
 # http://archivesspace.github.io/archivesspace/user/running-archivesspace-against-mysql/
 cd /aspace/archivesspace/lib
-wget -nv http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar
+wget -nv http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar
 
 # Edit the config file to use the MySQL database, setup our plugins, and disable the public and staff interfaces
 # http://stackoverflow.com/questions/14643531/changing-contents-of-a-file-through-shell-script
