@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Download and unzip a packaged ArchivesSpace release and corresponding source code
-export AS_VERSION=2.5.2
+export AS_VERSION=2.7.1
 mkdir /aspace
 mkdir /aspace/source
 mkdir /aspace/zips
